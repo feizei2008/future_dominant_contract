@@ -1,0 +1,2 @@
+# future_dominant_contract
+从新浪财经判断期货主力合约是否需要换月
