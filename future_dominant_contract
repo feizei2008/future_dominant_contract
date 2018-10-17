@@ -52,16 +52,18 @@ dfDominant = html2Df(htmlDC)
 def cmpRecDomi(df1,df2):
     df1 = df1.set_index(df1.symbolAlpha)
     df1 = df1[df1.symbolAlpha.apply(format3)]#.filter(items=['Vol','openInterest'])
-    df1 = df1[['openInterest', 'Vol']]
-    df1 = df1.applymap(lambda s: s.replace(',', '')).astype(float)
+    df1 = df1[['date', 'time', 'openInterest', 'Vol']]
+    df11 = df1[['openInterest', 'Vol']].applymap(lambda s: s.replace(',', '')).astype(float)
 
     df2 = df2.set_index(df2.symbolAlpha)
     df2 = df2[df2.symbolAlpha.apply(format3)]#.filter(items=['Vol', 'openInterest'])
-    df2 = df2[['openInterest', 'Vol']]
-    df2 = df2.applymap(lambda s: s.replace(',', '')).astype(float)
+    df2 = df2[['date', 'time', 'openInterest', 'Vol']]
+    df22 = df2[['openInterest', 'Vol']].applymap(lambda s: s.replace(',', '')).astype(float)
 
-    print df1 / df2
-    print df1 - df2
+    df3 = df1
+    df3['OIDiff'] = df11[['openInterest']] - df22[['openInterest']]
+    df3['VDiff'] = df11[['Vol']] - df22[['Vol']]
+    print df3
 
 if __name__ == "__main__":
     cmpRecDomi(dfRecord, dfDominant)
